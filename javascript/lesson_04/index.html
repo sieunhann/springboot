@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .box {
+            display: block;
+            background-color: #f3f3f3;
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            float: left;
+            margin: 5px;
+        }
+
+        .box:hover {
+            transform: scale(.9);
+            transition-duration: .5s;
+            opacity: .8;
+            cursor: pointer;
+        }
+
+        .box:active {
+            transform: scale(1.5);
+            transition-duration: .5s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <h1> JS DOM</h1>
+        <button id="btn">More boxes</button>
+        <h4 id="score"> Total box:<span class="points"></span></h4>
+
+        <div class="boxes">
+        </div>
+    </div>
+    <script>
+        let colors = [
+            '#3498db',
+            '#9b59b6',
+            '#e74c3c',
+            '#2c3e50',
+            '#d35400',
+        ]
+
+        let boxParent = document.querySelector(".boxes");
+        let total = document.querySelector(".points");
+
+        function addBox() {
+            let i = 0;
+            while (i < 5) {
+                let box = document.createElement("div")
+                boxParent.appendChild(box);
+                box.classList.add("box");
+                let j = Math.floor(Math.random() * colors.length);
+                box.style.backgroundColor = colors[j];
+                i++;
+            }
+        }
+        addBox();
+        total.innerHTML = "5";
+
+        let moreBox = document.querySelector("#btn");
+        moreBox.addEventListener("click", function () {
+            addBox();
+            total.innerHTML = parseInt(total.innerHTML, 10) + 5;
+            let listBox = document.querySelectorAll(".box");
+            listBox.forEach((listBox) => {
+                listBox.addEventListener("click", function () {
+                    boxParent.removeChild(listBox);
+                    total.innerHTML = parseInt(total.innerHTML, 10) - 1;
+                })
+            })
+        });
+
+
+    </script>
+</body>
+
+</html>
